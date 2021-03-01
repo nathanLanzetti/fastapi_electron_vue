@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
+import path from "path"
 const isDevelopment = process.env.NODE_ENV !== "production"
 // const fs = require("fs")
 // Scheme must be registered before the app is ready
@@ -14,6 +15,14 @@ async function createWindow() {
   // console.log(__dirname)
   const executablePath =
     "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\api_compiled\\main\\main.exe"
+  const calcPath = path.join(
+    __dirname,
+    "../",
+    "api_compiled",
+    "main",
+    "main.exe"
+  )
+  console.log(calcPath)
 
   // const port_file =
   //   "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\port_config.txt"
@@ -30,6 +39,7 @@ async function createWindow() {
 
   var fun = function() {
     console.log("fun() start")
+    console.log(calcPath)
     exec(executablePath, function(err, data) {
       console.log(err)
       console.log(data.toString())
