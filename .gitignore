@@ -38,12 +38,11 @@ yarn-error.log*
 api.spec
 
 #Databse
-*.db
+# *.db
 
 tempData
 
 api/htmlcov
-databases_files
 
 # notes perso
 notes_nathan.md
