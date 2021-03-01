@@ -1,7 +1,18 @@
 .DS_Store
 node_modules
+.vs
+.vscode
+dist_electron
+api/venv
 /dist
+electron-builder.yml
+api_compiled
+build
+venv
 
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
 # local env files
 .env.local
@@ -11,7 +22,7 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+*.log
 
 # Editor directories and files
 .idea
@@ -21,3 +32,19 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+#Electron-builder output
+/dist_electron
+api.spec
+
+#Databse
+*.db
+
+tempData
+
+api/htmlcov
+databases_files
+
+# notes perso
+notes_nathan.md
+.dccache
