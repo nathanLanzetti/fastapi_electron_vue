@@ -1,6 +1,7 @@
 // configure axios
 import axios from "axios"
 import store from "./store"
+// import { ipcRenderer } from "electron"
 // import { sendRequest } from "@/renderer.js"
 
 // import fs from "fs"
@@ -17,7 +18,7 @@ export const api = {
   },
 
   getCurrentPort() {
-    // sendRequest("port_config")
+    console.log(window.ipcRenderer.sendSync("test", "ping"))
     return 0
   },
 

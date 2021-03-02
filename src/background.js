@@ -1,6 +1,6 @@
 "use strict"
 
-import { app, protocol, BrowserWindow } from "electron"
+import { app, protocol, BrowserWindow, ipcMain } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 import path from "path"
@@ -50,6 +50,8 @@ async function createWindow() {
 
   // Create the browser window.
   // process.env.PORT_API = 1543
+  const preload_path =
+    "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\src\\preload.js"
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -57,6 +59,7 @@ async function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      preload: preload_path,
     },
   })
 
@@ -116,8 +119,8 @@ if (isDevelopment) {
   }
 }
 
-/* IPCMAIN */
-// ipcMain.on("port_config", (event, args) => {
-//   console.log(event.sender)
-//   console.log(args)
-// })
+/* ICP MAIN */
+ipcMain.on("test", (event, arg) => {
+  console.log(arg) // prints "ping"
+  event.returnValue = "pong"
+})

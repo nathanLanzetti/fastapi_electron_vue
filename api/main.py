@@ -63,6 +63,8 @@ port_app = find_free_port()
 # f.write(f"VUE_APP_PORT_API={port_app}")
 # # f.write(f"VUE_APP_EXE_PATH={os.a}")
 # f.close()
+if not os.path.exists(os.path.join(os.getcwd(), "public")):
+    os.makedirs(os.path.join(os.getcwd(), "public"))
 
 f = open(os.path.join(os.getcwd(), "public", "port_config.txt"), "w")
 f.write(f"{port_app}")
