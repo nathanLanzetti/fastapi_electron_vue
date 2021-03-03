@@ -11,18 +11,13 @@ from utils.config import DATABASE_PATH
 from os.path import join
 import os
 import uvicorn
-import logging
 
 port_app = find_free_port()
-# f = open(os.path.join(os.getcwd(), ".env"), "w")
-# f.write(f"VUE_APP_PORT_API={port_app}")
-# # f.write(f"VUE_APP_EXE_PATH={os.a}")
-# f.close()
-# if not os.path.exists(os.path.join(os.getcwd(), "public")):
-#     os.makedirs(os.path.join(os.getcwd(), "public"))
+if not os.path.exists(os.path.join(os.getcwd(), "configs")):
+    os.makedirs(os.path.join(os.getcwd(), "configs"))
 
-# f = open(os.path.join(os.getcwd(), "configs", "port_config.txt"), "w")
-f = open(r"D:/configs/port_config.txt", "w")
+f = open(os.path.join(os.getcwd(), "configs", "port_config.txt"), "w")
+# f = open(r"D:/configs/port_config.txt", "w")
 
 f.write(f"{port_app}")
 # f.write(f"VUE_APP_EXE_PATH={os.a}")
@@ -30,18 +25,11 @@ f.close()
 
 app = FastAPI()
 
-# logging.basicConfig(
-#     level=2,
-#     format="%(asctime)-15s %(levelname)-8s %(message)s"
-# )
-
 origins = [
     "http://localhost:",
     "http://localhost:8080",
     "http://localhost:*",
     "https://localhost:*",
-    # "app://.",
-    # "app://.*",
     "*"
 ]
 
@@ -64,10 +52,6 @@ app.include_router(config.router)
 # init_database_reddit(join(DATABASE_PATH, "reddit.db"))
 # init_database_monster(join(DATABASE_PATH, "monsterhunter.db"))
 
-# logger = logging.getLogger("My logs")
-# logger.setLevel(logging.DEBUG)
-# logger.debug("TEST")
-
 
 @app.get("/")
 async def root():
@@ -78,7 +62,4 @@ print(os.getcwd())
 print(os.path.abspath("./"))
 print("--------------------------------------------")
 
-os.environ["UCOLLABORATE"] = f"{port_app}"
-print(os.getenv("UCOLLABORATE"))
-print("Bruuuuuuuuuuuuh")
 uvicorn.run(app, host="127.0.0.1", port=port_app, reload=False)

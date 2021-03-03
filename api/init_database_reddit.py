@@ -22,8 +22,6 @@ TABLES = {
         "  `begin_date` text NOT NULL,"
         "  `user_id` integer NOT NULL,"
         "  FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)"
-        # "  ON UPDATE SET NULL,"
-        # "  ON DELETE SET NULL,"
         ");"
     ),
 }
@@ -113,7 +111,3 @@ def __create_posts(conn, posts=POSTS):
     for post_number in posts:
         list_of_ids.append(__create_post(conn, posts[post_number]))
     return list_of_ids
-
-
-# if __name__ == '__main__':
-#     run()
