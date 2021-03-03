@@ -73,3 +73,10 @@ npm run custom:serve
 
 - IpcMain to renderer (background callback)
 - Mounted => while (port) => works
+
+# Stuff TODO
+
+- Clean project + push
+- Integration fastapi \*dev branch
+- copie coller (api) => (apiv2)
+- api.py intégrer router pour chacune des fonctions

@@ -1,11 +1,9 @@
 from fastapi import APIRouter
 from typing import List
-import json
-import sqlite3
+
 from controllers.reddit import users as userController
 from controllers.reddit import posts as postController
 from models.reddit.users import User as UserModel
-from models.reddit.posts import Post as PostModel
 
 router = APIRouter(
     prefix="/api/reddit/users",

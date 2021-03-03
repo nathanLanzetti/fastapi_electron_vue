@@ -1,8 +1,4 @@
 from fastapi import APIRouter
-from typing import List, Dict
-
-from models.monsterhunter.monsters import Monster as MonsterModel, BaseMonster as BaseMonsterModel
-from controllers.monsterhunter import monsters as monster_controller
 from controllers.projects import projects
 
 router = APIRouter(

@@ -1,8 +1,3 @@
-import sqlite3
-import os
-from os.path import join
-from init_database_reddit import __create_connection
-from utils.dict_factory import _dict_factory
 from utils.databases_connections import cursor_monsterhunter as c
 
 

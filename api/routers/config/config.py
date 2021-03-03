@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 import os
-import signal
+# Next 2 import usefuls for more robust solutions to kill a process
+# import signal
 # import psutil
 
 router = APIRouter(
@@ -12,26 +13,23 @@ router = APIRouter(
 
 @router.get("/process")
 async def get_process():
-    # works
     print(os.getenv("UCOLLABORATE"))
     return os.getenv("UCOLLABORATE")
 
 
 @router.get("/kill")
 async def kill_process():
-    # works
-    port_to_kill = os.getpid()
-    os.kill(port_to_kill, 9)
+    # find the current process (process id) and kills it
+    process_to_kill = os.getpid()
+    os.kill(process_to_kill, 9)  # 9 == signal to kill
+    # More robust way to kill a specific processs
     # for proc in psutil.process_iter():
     #     for conn in proc.connections(kind='tcp'):
     #         if conn.status == psutil.CONN_LISTEN and conn.laddr.port == int(os.getenv("UCOLLABORATE")):
-    #             print(conn)
-    #             print(proc)
     #             print(proc.pid)
 
     #             # port_to_kill = proc['pid']
     #             # print(proc['pid'])
     #             port_to_kill = proc.pid
 
-    # print(f" GET PID ? {os.getpid()}")
     # return port_to_kill
