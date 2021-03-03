@@ -1,5 +1,3 @@
-import sqlite3
-import os
 from os.path import join
 from utils.dict_factory import _dict_factory
 from init_database_reddit import __create_connection

@@ -1,4 +1,3 @@
-import sqlite3
 from init_database_reddit import __create_connection
 from os.path import join
 from utils.dict_factory import _dict_factory
@@ -14,11 +13,6 @@ def update_current_database(database_name: str):
     print(f"CONNECTION : {CURRENT_CONNECTION}")
     print(f"CURRENT_DATABASE_NAME : {CURRENT_DATABASE_NAME}")
     CURRENT_CONNECTION.row_factory = _dict_factory
-    # cursor_monsterhunter = conn_monsterhunter.cursor()
     CURRENT_CURSOR = CURRENT_CONNECTION.cursor()
     print(f"CURSOR : {CURRENT_CURSOR}")
-    return CURRENT_CURSOR
-
-
-def get_cursor():
     return CURRENT_CURSOR
