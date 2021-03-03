@@ -17,7 +17,20 @@ export const api = {
     return store.getters.getPort
   },
 
-  getCurrentPort() {
+  testPortConnection(portNumber) {
+    let isSuccessful = false
+    const result = axios
+      .get(`http://localhost:${portNumber}/`)
+      .then(() => {
+        return !isSuccessful
+      })
+      .catch(() => {
+        return isSuccessful
+      })
+    return result
+  },
+
+  async getCurrentPort() {
     const portNumber = ipcRenderer.sendSync("test", "ping")
     return portNumber
   },

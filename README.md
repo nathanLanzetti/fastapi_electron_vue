@@ -72,4 +72,4 @@ npm run custom:serve
 - Mettre port_config.txt dans un fichier autre que la ou est le build => Nope
 
 - IpcMain to renderer (background callback)
-- Mounted => while (port)
+- Mounted => while (port) => works

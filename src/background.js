@@ -4,6 +4,8 @@ import { app, protocol, BrowserWindow, ipcMain } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 import path from "path"
+import { api } from "@/api.js"
+
 const isDevelopment = process.env.NODE_ENV !== "production"
 const fs = require("fs")
 // Scheme must be registered before the app is ready
@@ -118,24 +120,41 @@ if (isDevelopment) {
 /* ICP MAIN */
 ipcMain.on("test", (event, arg) => {
   let portFilePath = ""
-  if (process.env.NODE_ENV != "development") {
-    portFilePath = path.join(
-      __dirname,
-      "../",
-      "../",
-      "configs",
-      "port_config.txt"
-    )
-  } else {
-    portFilePath = path.join(__dirname, "../", "configs", "port_config.txt")
-  }
+  // if (process.env.NODE_ENV != "development") {
+  //   portFilePath = path.join(
+  //     __dirname,
+  //     "../",
+  //     "../",
+  //     "configs",
+  //     "port_config.txt"
+  //   )
+  // } else {
+  //   portFilePath = path.join(__dirname, "../", "configs", "port_config.txt")
+  // }
   portFilePath = "D:/configs/port_config.txt"
-  console.log(arg) // prints "ping"
   console.log(portFilePath)
-  const portNumber = fs.readFileSync(portFilePath, "utf-8")
-  console.log(portNumber)
-  event.returnValue = portNumber
-
-  // while get("/")
-  // error => retry après intervalle
+  let portNumber = ""
+  var intervalId = setInterval(function() {
+    portNumber = fs.readFileSync(portFilePath, "utf-8")
+    api.testPortConnection(portNumber).then((result) => {
+      console.log(portNumber)
+      if (result) {
+        console.log(result)
+        event.returnValue = portNumber
+        clearInterval(intervalId)
+      }
+    })
+  }, 1000)
+  console.log("TimeOutDone")
 })
+// const wrapper = async () => {
+//   let portNumber = await fetchPort()
+//   return portNumber
+// }
+// const fetchPort = async () => {
+//   let portNumber = ""
+//   await setTimeout(() => {
+//     portNumber = fs.readFileSync(portFilePath, "utf-8")
+//   }, 5000)
+//   return portNumber
+// }
