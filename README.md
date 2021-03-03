@@ -65,3 +65,11 @@ npm run custom:serve
 
 - Localhost:8080 not running on build ?
 - icpMain && renderer \_\_dirname error
+
+# Read file not in sync
+
+- Corriger await partout
+- Mettre port_config.txt dans un fichier autre que la ou est le build => Nope
+
+- IpcMain to renderer (background callback)
+- Mounted => while (port)

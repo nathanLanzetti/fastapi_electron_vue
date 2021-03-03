@@ -19,10 +19,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async setPortFromFile(context) {
-      console.log(context)
-      api.getCurrentPort()
-      // context.commit("mutatePortFromFile", result)
+    async setPortFromFile({ commit }) {
+      // console.log(context)
+      const result = api.getCurrentPort()
+      commit("mutatePortFromFile", result)
     },
   },
   modules: {},

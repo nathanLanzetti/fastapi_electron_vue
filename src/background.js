@@ -5,7 +5,7 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 import path from "path"
 const isDevelopment = process.env.NODE_ENV !== "production"
-// const fs = require("fs")
+const fs = require("fs")
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
@@ -13,36 +13,32 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
   // console.log(__dirname)
-  const executablePath =
-    "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\api_compiled\\main\\main.exe"
-  const calcPath = path.join(
-    __dirname,
-    "../",
-    "api_compiled",
-    "main",
-    "main.exe"
-  )
+  let calcPath = ""
+  if (process.env.NODE_ENV != "development") {
+    calcPath = path.join(
+      __dirname,
+      "../",
+      "../",
+      "api_compiled",
+      "main",
+      "main.exe"
+    )
+  } else {
+    calcPath = path.join(__dirname, "../", "api_compiled", "main", "main.exe")
+  }
   console.log(calcPath)
 
-  // const port_file =
-  //   "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\port_config.txt"
-
-  // const executablePathBuild =
-  //   "C:\\Users\\nath2\\AppData\\Local\\Programs\\proto_fastapi\\api_compiled\\main\\main.exe"
-  // const port_fileBuild =
-  //   "C:\\Users\\nath2\\AppData\\Local\\Programs\\proto_fastapi\\public\\port_config.txt"
-
   var exec = require("child_process").execFile
-  console.log(process.env.VUE_APP_PORT_API)
-  // process.env.VUE_APP_PORT_API = 1234
-  console.log(process.env.VUE_APP_PORT_API)
 
   var fun = function() {
     console.log("fun() start")
     console.log(calcPath)
-    exec(executablePath, function(err, data) {
+    exec(calcPath, function(err, data) {
       console.log(err)
       console.log(data.toString())
+      console.log("avzdazbazdvbavjazvdjavdjaz")
+      // envoie au renderer le port
+      // https://stackoverflow.com/questions/47597982/send-sync-message-from-ipcmain-to-ipcrenderer-electron
     })
   }
   // Use fs.readFile() method to read the file
@@ -50,8 +46,8 @@ async function createWindow() {
 
   // Create the browser window.
   // process.env.PORT_API = 1543
-  const preload_path =
-    "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\src\\preload.js"
+  // const preload_path =
+  //   "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\src\\preload.js"
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -59,7 +55,7 @@ async function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      preload: preload_path,
+      // preload: preload_path,
     },
   })
 
@@ -121,6 +117,25 @@ if (isDevelopment) {
 
 /* ICP MAIN */
 ipcMain.on("test", (event, arg) => {
+  let portFilePath = ""
+  if (process.env.NODE_ENV != "development") {
+    portFilePath = path.join(
+      __dirname,
+      "../",
+      "../",
+      "configs",
+      "port_config.txt"
+    )
+  } else {
+    portFilePath = path.join(__dirname, "../", "configs", "port_config.txt")
+  }
+  portFilePath = "D:/configs/port_config.txt"
   console.log(arg) // prints "ping"
-  event.returnValue = "pong"
+  console.log(portFilePath)
+  const portNumber = fs.readFileSync(portFilePath, "utf-8")
+  console.log(portNumber)
+  event.returnValue = portNumber
+
+  // while get("/")
+  // error => retry après intervalle
 })

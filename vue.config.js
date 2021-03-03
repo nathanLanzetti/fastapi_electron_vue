@@ -1,7 +1,8 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
-      preload: "src/preload.js",
+      nodeIntegration: true,
+      // preload: "src/preload.js",
       builderOptions: {
         extraFiles: [
           {
@@ -20,22 +21,10 @@ module.exports = {
             to: "api_compiled/",
           },
           {
-            from: "public/",
+            from: "configs/",
             // to:'./resources/api/'
-            to: "public/",
+            to: "configs/",
           },
-          // // {
-          // //   from:'api/addon',
-          // //   to:'api/addon'
-          // // },
-          // {
-          //   from: "api/utils/stop_words_default.txt",
-          //   to: "api/utils/stop_words_default.txt",
-          // },
-          // {
-          //   from: "api/textblob_fr",
-          //   to: "api/textblob_fr",
-          // },
         ],
       },
     },

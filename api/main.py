@@ -13,6 +13,21 @@ import os
 import uvicorn
 import logging
 
+port_app = find_free_port()
+# f = open(os.path.join(os.getcwd(), ".env"), "w")
+# f.write(f"VUE_APP_PORT_API={port_app}")
+# # f.write(f"VUE_APP_EXE_PATH={os.a}")
+# f.close()
+# if not os.path.exists(os.path.join(os.getcwd(), "public")):
+#     os.makedirs(os.path.join(os.getcwd(), "public"))
+
+# f = open(os.path.join(os.getcwd(), "configs", "port_config.txt"), "w")
+f = open(r"D:/configs/port_config.txt", "w")
+
+f.write(f"{port_app}")
+# f.write(f"VUE_APP_EXE_PATH={os.a}")
+f.close()
+
 app = FastAPI()
 
 # logging.basicConfig(
@@ -24,6 +39,10 @@ origins = [
     "http://localhost:",
     "http://localhost:8080",
     "http://localhost:*",
+    "https://localhost:*",
+    # "app://.",
+    # "app://.*",
+    "*"
 ]
 
 app.add_middleware(
@@ -58,18 +77,6 @@ print("-------------------PATHS--------------------")
 print(os.getcwd())
 print(os.path.abspath("./"))
 print("--------------------------------------------")
-port_app = find_free_port()
-# f = open(os.path.join(os.getcwd(), ".env"), "w")
-# f.write(f"VUE_APP_PORT_API={port_app}")
-# # f.write(f"VUE_APP_EXE_PATH={os.a}")
-# f.close()
-if not os.path.exists(os.path.join(os.getcwd(), "public")):
-    os.makedirs(os.path.join(os.getcwd(), "public"))
-
-f = open(os.path.join(os.getcwd(), "public", "port_config.txt"), "w")
-f.write(f"{port_app}")
-# f.write(f"VUE_APP_EXE_PATH={os.a}")
-f.close()
 
 os.environ["UCOLLABORATE"] = f"{port_app}"
 print(os.getenv("UCOLLABORATE"))

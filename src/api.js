@@ -1,7 +1,7 @@
 // configure axios
 import axios from "axios"
 import store from "./store"
-// import { ipcRenderer } from "electron"
+import { ipcRenderer } from "electron"
 // import { sendRequest } from "@/renderer.js"
 
 // import fs from "fs"
@@ -18,12 +18,12 @@ export const api = {
   },
 
   getCurrentPort() {
-    console.log(window.ipcRenderer.sendSync("test", "ping"))
-    return 0
+    const portNumber = ipcRenderer.sendSync("test", "ping")
+    return portNumber
   },
 
   async queryUsers() {
-    const result = await axios
+    const result = axios
       .get(`http://localhost:${this.getPort()}/api/reddit/users/`)
       .then((response) => {
         return response.data
@@ -32,7 +32,7 @@ export const api = {
   },
 
   async queryPosts() {
-    const result = await axios
+    const result = axios
       .get(`http://localhost:${this.getPort()}/api/reddit/posts/`)
       .then((response) => {
         return response.data
@@ -41,7 +41,7 @@ export const api = {
   },
 
   async queryMonsters() {
-    const result = await axios
+    const result = axios
       .get(`http://localhost:${this.getPort()}/api/monsterhunter/monsters/`)
       .then((response) => {
         return response.data
@@ -50,7 +50,7 @@ export const api = {
   },
 
   async queryWeapons() {
-    const result = await axios
+    const result = axios
       .get(`http://localhost:${this.getPort()}/api/monsterhunter/weapons/`)
       .then((response) => {
         return response.data
