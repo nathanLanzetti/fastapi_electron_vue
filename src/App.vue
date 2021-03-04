@@ -41,14 +41,11 @@ export default {
     HelloWorld,
   },
 
-  data: () => ({
-    //
-  }),
+  data: () => ({}),
   methods: {
     ...mapActions(["setPortFromFile"]),
   },
   mounted() {
-    console.log("hey")
     this.setPortFromFile()
   },
 }

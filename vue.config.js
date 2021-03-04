@@ -1,28 +1,19 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
-      nodeIntegration: true,
-      // preload: "src/preload.js",
+      nodeIntegration: true, // enable use of node functions and ipcRenderer
       builderOptions: {
         extraFiles: [
           {
             from: "api/",
-            // to:'./resources/api/'
             to: "api/",
           },
           {
-            from: "databases/",
-            // to:'./resources/api/'
-            to: "databases/",
-          },
-          {
             from: "api_compiled/",
-            // to:'./resources/api/'
             to: "api_compiled/",
           },
           {
             from: "configs/",
-            // to:'./resources/api/'
             to: "configs/",
           },
         ],

@@ -5,6 +5,7 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 import path from "path"
 import { api } from "@/api.js"
+import { execFile } from "child_process"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 const fs = require("fs")
@@ -14,7 +15,6 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
-  // console.log(__dirname)
   let calcPath = ""
   if (process.env.NODE_ENV != "development") {
     calcPath = path.join(
@@ -30,26 +30,13 @@ async function createWindow() {
   }
   console.log(calcPath)
 
-  var exec = require("child_process").execFile
-
-  var fun = function() {
-    console.log("fun() start")
+  const executeApi = () => {
     console.log(calcPath)
-    exec(calcPath, function(err, data) {
-      console.log(err)
-      console.log(data.toString())
-      console.log("avzdazbazdvbavjazvdjavdjaz")
-      // envoie au renderer le port
-      // https://stackoverflow.com/questions/47597982/send-sync-message-from-ipcmain-to-ipcrenderer-electron
-    })
+    execFile(calcPath)
   }
-  // Use fs.readFile() method to read the file
-  fun()
 
-  // Create the browser window.
-  // process.env.PORT_API = 1543
-  // const preload_path =
-  //   "D:\\HELHA\\HELHA\\3BIG\\Stage\\vue_and_fastapi\\prototype\\proto_fastapi\\src\\preload.js"
+  executeApi()
+
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -57,7 +44,6 @@ async function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      // preload: preload_path,
     },
   })
 
@@ -118,23 +104,22 @@ if (isDevelopment) {
 }
 
 /* ICP MAIN */
-ipcMain.on("test", (event, arg) => {
+ipcMain.on("test", (event) => {
   let portFilePath = ""
-  // if (process.env.NODE_ENV != "development") {
-  //   portFilePath = path.join(
-  //     __dirname,
-  //     "../",
-  //     "../",
-  //     "configs",
-  //     "port_config.txt"
-  //   )
-  // } else {
-  //   portFilePath = path.join(__dirname, "../", "configs", "port_config.txt")
-  // }
-  portFilePath = "D:/configs/port_config.txt"
+  if (process.env.NODE_ENV != "development") {
+    portFilePath = path.join(
+      __dirname,
+      "../",
+      "../",
+      "configs",
+      "port_config.txt"
+    )
+  } else {
+    portFilePath = path.join(__dirname, "../", "configs", "port_config.txt")
+  }
   console.log(portFilePath)
   let portNumber = ""
-  var intervalId = setInterval(function() {
+  const intervalId = setInterval(() => {
     portNumber = fs.readFileSync(portFilePath, "utf-8")
     api.testPortConnection(portNumber).then((result) => {
       console.log(portNumber)
@@ -145,16 +130,4 @@ ipcMain.on("test", (event, arg) => {
       }
     })
   }, 1000)
-  console.log("TimeOutDone")
 })
-// const wrapper = async () => {
-//   let portNumber = await fetchPort()
-//   return portNumber
-// }
-// const fetchPort = async () => {
-//   let portNumber = ""
-//   await setTimeout(() => {
-//     portNumber = fs.readFileSync(portFilePath, "utf-8")
-//   }, 5000)
-//   return portNumber
-// }
