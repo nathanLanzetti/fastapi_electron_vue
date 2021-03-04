@@ -43,11 +43,6 @@ export default {
     },
   },
   methods: {
-    logEnv() {
-      console.log("Env var")
-      console.log(process.env)
-      console.log(process.env.PORT_API)
-    },
     async printOutput(queryType) {
       console.log(queryType)
       switch (queryType) {
