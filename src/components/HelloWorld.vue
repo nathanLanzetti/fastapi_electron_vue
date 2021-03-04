@@ -16,6 +16,9 @@
         <v-btn block @click="printOutput('weapons')">
           Fetch Weapons
         </v-btn>
+        <!-- <div v-for="data in datas" :key="data.user_id">
+          <p>{{ data.firstname }} {{ data.lastname }}</p>
+        </div> -->
       </v-col>
       <v-col cols="12">
         <div>{{ datas }}</div>
@@ -34,6 +37,7 @@ export default {
   data() {
     return {
       datas: [],
+      // ULR_API: `http://localhost:${this.getPort}/api/`,
     }
   },
   computed: {
